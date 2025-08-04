@@ -5,3 +5,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/fruitdb
+      
+logging:
+  level:
+    root: INFO
+    com.chandan.fruit.fmp: DEBUG
+    org.springframework.data.mongodb: DEBUG

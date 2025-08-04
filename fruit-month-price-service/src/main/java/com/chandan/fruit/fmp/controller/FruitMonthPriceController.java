@@ -57,4 +57,12 @@ public class FruitMonthPriceController {
         response.put("port", environment.getProperty("server.port"));
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/debug/all")
+    public ResponseEntity<Map<String, Object>> debugAll() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalCount", repository.count());
+        response.put("samples", repository.findAll().stream().limit(5).toList());
+        return ResponseEntity.ok(response);
+    }
 }
