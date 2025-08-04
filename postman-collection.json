@@ -1,0 +1,131 @@
+{
+  "info": {
+    "name": "Fruit Price Microservices",
+    "description": "Collection for testing Fruit Price Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "FMP Service",
+      "item": [
+        {
+          "name": "Get Banana Price in July",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/fruit-month-price/fruit/banana/month/jul",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["fruit-month-price", "fruit", "banana", "month", "jul"]
+            }
+          }
+        },
+        {
+          "name": "Get Apple Price in December",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/fruit-month-price/fruit/apple/month/dec",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["fruit-month-price", "fruit", "apple", "month", "dec"]
+            }
+          }
+        },
+        {
+          "name": "Invalid Fruit Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/fruit-month-price/fruit/xyz/month/jan",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["fruit-month-price", "fruit", "xyz", "month", "jan"]
+            }
+          }
+        },
+        {
+          "name": "FMP Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/fruit-month-price/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["fruit-month-price", "health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "FTP Service",
+      "item": [
+        {
+          "name": "Get Total Price - 10kg Banana in July",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8100",
+              "path": ["fruit-total-price", "fruit", "banana", "month", "jul", "quantity", "10"]
+            }
+          }
+        },
+        {
+          "name": "Get Total Price - 5.5kg Cherry in May",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8100/fruit-total-price/fruit/cherry/month/may/quantity/5.5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8100",
+              "path": ["fruit-total-price", "fruit", "cherry", "month", "may", "quantity", "5.5"]
+            }
+          }
+        },
+        {
+          "name": "Invalid Quantity Test",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/0",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8100",
+              "path": ["fruit-total-price", "fruit", "banana", "month", "jul", "quantity", "0"]
+            }
+          }
+        },
+        {
+          "name": "FTP Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8100/fruit-total-price/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8100",
+              "path": ["fruit-total-price", "health"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

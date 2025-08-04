@@ -1,0 +1,10 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: fruit-total-price-service
+
+logging:
+  level:
+    com.chandan.fruit.ftp: DEBUG
