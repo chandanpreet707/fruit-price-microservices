@@ -7,11 +7,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.NoSuchElementException;
+import com.chandan.fruit.fmp.repo.FruitPriceRepository;
+import lombok.RequiredArgsConstructor;      
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/fruit-month-price")
 public class FruitMonthPriceController {
 
@@ -23,29 +27,27 @@ public class FruitMonthPriceController {
         this.repository = repository;
         this.environment = environment;
     }
+    
+    @RestControllerAdvice
+    class NotFoundAdvice {
 
-    @GetMapping("/fruit/{fruitName}/month/{monthName}")
-    public ResponseEntity<Map<String, Object>> getFruitPrice(
-            @PathVariable String fruitName,
-            @PathVariable String monthName) {
-        
-        return repository.findByFruitIgnoreCaseAndMonthIgnoreCase(fruitName, monthName)
-                .map(fruitPrice -> {
-                    Map<String, Object> response = new HashMap<>();
-                    response.put("id", 10001); // Static ID as per requirement
-                    response.put("fruit", fruitPrice.getFruit());
-                    response.put("month", fruitPrice.getMonth());
-                    response.put("fmp", fruitPrice.getPrice());
-                    response.put("environment", environment.getProperty("server.port") + " instance-id");
-                    return ResponseEntity.ok(response);
-                })
-                .orElseGet(() -> {
-                    Map<String, Object> errorResponse = new HashMap<>();
-                    errorResponse.put("error", "Fruit price not found");
-                    errorResponse.put("message", String.format("No price found for fruit '%s' in month '%s'", fruitName, monthName));
-                    errorResponse.put("status", HttpStatus.NOT_FOUND.value());
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-                });
+        @ExceptionHandler(NoSuchElementException.class)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        public Map<String,String> handle(NoSuchElementException ex) {
+            return Map.of("error", "fruit/month pair not found");
+        }
+    }
+
+    @GetMapping("/fruit-month-price/fruit/{fruit}/month/{month}")
+    public ResponseEntity<FruitPrice> getUnitPrice(
+            @PathVariable String fruit,
+            @PathVariable String month) {
+
+        return repository.findByFruitIgnoreCaseAndMonthIgnoreCase(
+                        fruit.trim(),
+                        month.trim().toLowerCase())
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
     
     // Health check endpoint

@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Fruit Price Microservices",
-    "description": "Collection for testing Fruit Price Microservices",
+    "description": "Local-host test collection for Fruit-Month-Price (8000) and Fruit-Total-Price (8100) services.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -12,56 +12,35 @@
           "name": "Get Banana Price in July",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8000/fruit-month-price/fruit/banana/month/jul",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["fruit-month-price", "fruit", "banana", "month", "jul"]
-            }
+            "url": "http://localhost:8000/fruit-month-price/fruit/banana/month/jul"
           }
         },
         {
           "name": "Get Apple Price in December",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8000/fruit-month-price/fruit/apple/month/dec",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["fruit-month-price", "fruit", "apple", "month", "dec"]
-            }
+            "url": "http://localhost:8000/fruit-month-price/fruit/apple/month/dec"
           }
         },
         {
-          "name": "Invalid Fruit Test",
+          "name": "Invalid Fruit Test (404)",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8000/fruit-month-price/fruit/xyz/month/jan",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["fruit-month-price", "fruit", "xyz", "month", "jan"]
-            }
+            "url": "http://localhost:8000/fruit-month-price/fruit/xyz/month/jan"
+          }
+        },
+        {
+          "name": "Debug – list sample docs",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8000/fruit-month-price/debug/all"
           }
         },
         {
           "name": "FMP Health Check",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8000/fruit-month-price/health",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["fruit-month-price", "health"]
-            }
+            "url": "http://localhost:8000/fruit-month-price/health"
           }
         }
       ]
@@ -70,59 +49,38 @@
       "name": "FTP Service",
       "item": [
         {
-          "name": "Get Total Price - 10kg Banana in July",
+          "name": "Get Total Price – 10 kg Banana in July",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/10",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8100",
-              "path": ["fruit-total-price", "fruit", "banana", "month", "jul", "quantity", "10"]
-            }
+            "url": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/10"
           }
         },
         {
-          "name": "Get Total Price - 5.5kg Cherry in May",
+          "name": "Get Total Price – 5.5 kg Cherry in May",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8100/fruit-total-price/fruit/cherry/month/may/quantity/5.5",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8100",
-              "path": ["fruit-total-price", "fruit", "cherry", "month", "may", "quantity", "5.5"]
-            }
+            "url": "http://localhost:8100/fruit-total-price/fruit/cherry/month/may/quantity/5.5"
           }
         },
         {
-          "name": "Invalid Quantity Test",
+          "name": "Invalid Quantity Test (should 400/404)",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/0",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8100",
-              "path": ["fruit-total-price", "fruit", "banana", "month", "jul", "quantity", "0"]
-            }
+            "url": "http://localhost:8100/fruit-total-price/fruit/banana/month/jul/quantity/0"
+          }
+        },
+        {
+          "name": "Debug – list sample totals",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8100/fruit-total-price/debug/all"
           }
         },
         {
           "name": "FTP Health Check",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8100/fruit-total-price/health",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8100",
-              "path": ["fruit-total-price", "health"]
-            }
+            "url": "http://localhost:8100/fruit-total-price/health"
           }
         }
       ]

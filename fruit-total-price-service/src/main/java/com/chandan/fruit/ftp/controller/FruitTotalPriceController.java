@@ -32,9 +32,9 @@ public class FruitTotalPriceController {
 
     @GetMapping("/fruit/{fruitName}/month/{monthName}/quantity/{quantity}")
     public ResponseEntity<Map<String, Object>> getTotalPrice(
-            @PathVariable String fruitName,
-            @PathVariable String monthName,
-            @PathVariable BigDecimal quantity) {
+            @PathVariable("fruitName") String fruitName,
+            @PathVariable("monthName") String monthName,
+            @PathVariable("quantity")  BigDecimal quantity) {
         
         // Validate quantity
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
