@@ -34,7 +34,7 @@ public class FruitTotalPriceController {
     public ResponseEntity<Map<String, Object>> getTotalPrice(
             @PathVariable("fruitName") String fruitName,
             @PathVariable("monthName") String monthName,
-            @PathVariable("quantity")  BigDecimal quantity) {
+            @PathVariable("quantity") BigDecimal quantity) {
         
         // Validate quantity
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {

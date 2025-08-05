@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.NoSuchElementException;
-import com.chandan.fruit.fmp.repo.FruitPriceRepository;
 import lombok.RequiredArgsConstructor;      
 
 import java.util.HashMap;
@@ -38,16 +37,50 @@ public class FruitMonthPriceController {
         }
     }
 
-    @GetMapping("/fruit-month-price/fruit/{fruit}/month/{month}")
-    public ResponseEntity<FruitPrice> getUnitPrice(
-            @PathVariable String fruit,
-            @PathVariable String month) {
+    // Fixed endpoint - removed the duplicate "/fruit-month-price" prefix
+    @GetMapping("/fruit/{fruit}/month/{month}")
+    public ResponseEntity<Map<String, Object>> getUnitPrice(
+            @PathVariable("fruit") String fruit,
+            @PathVariable("month") String month) {
 
-        return repository.findByFruitIgnoreCaseAndMonthIgnoreCase(
-                        fruit.trim(),
-                        month.trim().toLowerCase())
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        try {
+            // Normalize input
+            String normalizedFruit = fruit.trim().toLowerCase();
+            String normalizedMonth = month.trim().toLowerCase();
+            
+            // Log the request for debugging
+            System.out.println("Looking for fruit: " + normalizedFruit + ", month: " + normalizedMonth);
+            
+            // Find the fruit price
+            var fruitPriceOpt = repository.findByFruitIgnoreCaseAndMonthIgnoreCase(
+                    normalizedFruit, normalizedMonth);
+                    
+            if (fruitPriceOpt.isPresent()) {
+                FruitPrice fruitPrice = fruitPriceOpt.get();
+                Map<String, Object> response = new HashMap<>();
+                response.put("fruit", fruitPrice.getFruit());
+                response.put("month", fruitPrice.getMonth());
+                response.put("fmp", fruitPrice.getPrice());
+                response.put("port", environment.getProperty("server.port"));
+                return ResponseEntity.ok(response);
+            } else {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("error", "Fruit/month combination not found");
+                errorResponse.put("fruit", normalizedFruit);
+                errorResponse.put("month", normalizedMonth);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            }
+            
+        } catch (Exception e) {
+            // Log the exception
+            System.err.println("Error in getUnitPrice: " + e.getMessage());
+            e.printStackTrace();
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Internal server error");
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
     
     // Health check endpoint
